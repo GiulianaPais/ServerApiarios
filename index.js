@@ -79,6 +79,21 @@ var apiarios= [{
 
 var id = 20;
 
+var usuario=[{
+  "iden" : "1",
+  "email": "m@gmail.com",
+  "password": "1234",
+
+},
+/*{
+  "email": "g@gmail.com",
+  "password": "1234",
+
+},*/
+    
+]
+
+
 
 
 app.get("/apiarios",function(req,res){
@@ -91,16 +106,7 @@ app.get("/apiarios",function(req,res){
    
     
 });
-app.get("/loquesea",function(req,res){
 
-	 res.send("respuesta");    
-
-
-   
-   
-   
-    
-});
 
 app.get("/apiarios/:id",function(req,res){
   console.log(req.params.id);
@@ -165,7 +171,7 @@ app.post("/apiarios",function(req,res){
        
 			
 			var data = {"id":id,"nombre":req.body.nombre,"cantidad":req.body.cantidad,"debiles":req.body.debiles,"muertas":req.body.muertas,"ubicacion":req.body.ubicacion,"coord":req.body.coord,"imagen":req.body.imagen};
-				productos.push(data);
+				apiarios.push(data);
                 res.send(data);    
      
             return;
@@ -201,6 +207,72 @@ app.delete("/apiarios/:id",function(req,res){
     
 });
 
+app.put("/apiarios/:id",function(req, res) {
+   console.log(req.body);
+      setTimeout(function(){
+          if((req.body.cantidad!= undefined)&&(req.body.cantidad!=undefined) &&(req.body.debiles!= undefined) 
+        &&  (req.body.debiles!= undefined) && (req.body.muertas!= undefined) 
+        &&  (req.body.muertas!= undefined)
+        //&&  (req.body.ubicacion!= undefined) &&  (req.body.ubicacion!= undefined) 
+       //&& (req.body.coord!= undefined) 
+       // &&  (req.body.coord!= undefined) && (req.body.imagen!= undefined&&req.body.imagen!= "")
+       )
+       {
+       
+        //id = id +1;
+         
+        
+        var data = {"cantidad":req.body.cantidad,"debiles":req.body.debiles,"muertas":req.body.muertas};
+          apiarios.push(data);
+                  res.send(data);    
+                  console.log("estoy acá")
+       
+              return;
+          }
+          res.send({'type': 'error'});
+      },2000);
+      
+  });
+
+  /*app.put(function(req, res){
+    var data= {
+      "cantidad":req.body.cantidad,
+      "debiles":req.body.debiles,
+      "muertas":req.body.muertas,
+
+    }
+    apiario.update ({"_id":req.params.id},data, function(){
+      res.send(data);
+      console.log("entré")
+    })
+  }
+  )*/
+
+   
+ app.get("/login", function (req, res) {
+  respuesta = {
+   error: false,
+   mensaje: ''
+  };
+  if(req.body.email === 'm@gmail.com' &&req.body.password === '1234') {
+   respuesta = {
+    error: false,
+    mensaje: 'El usuario es correcto',
+    respuesta: usuario,
+   };
+   
+   console.log("estoy en el if")
+  } else {
+   respuesta = {
+    error: true,
+    mensaje: 'respuesta del usuario',
+    
+   };
+  }
+  res.send(respuesta);
+ });
+
 app.listen(3000,function(){
     console.log("Api en el puerto 3000");
+    
 });
